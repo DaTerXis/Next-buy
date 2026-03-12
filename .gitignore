@@ -1,0 +1,32 @@
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+.eggs/
+dist/
+build/
+
+# Jupyter
+.ipynb_checkpoints/
+
+# Datasets CSV (trop lourds pour GitHub)
+*.csv
+
+# Visualisations générées
+feature_importance.png
+category_importance.png
+
+# OS
+.DS_Store
+Thumbs.db
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# Environnement virtuel
+venv/
+env/
+.env/

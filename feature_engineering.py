@@ -230,9 +230,13 @@ class FeatureEngineer:
         ).astype(int)
         
         # Purchase frequency
+        user_total_orders = df.groupby('user_id')['order_id'].nunique().reset_index()
+        user_total_orders.columns = ['user_id', 'total_orders']
+        up_agg = up_agg.merge(user_total_orders, on='user_id', how='left')
         up_agg['up_purchase_frequency'] = (
-            up_agg['up_order_count'] / df.groupby('user_id')['order_id'].nunique().reset_index().rename(columns={'order_id': 'total_orders'})['total_orders'].values
+            up_agg['up_order_count'] / up_agg['total_orders']
         ).fillna(0)
+        up_agg = up_agg.drop(columns=['total_orders'])
         
         # Consistency score (low std = consistent)
         up_agg['up_consistency_score'] = (
@@ -240,7 +244,7 @@ class FeatureEngineer:
         )
         
         # Early/late cart indicators
-        up_agg['up_typically_early'] = (up_agg['up_avg_cart_position'] <= 5).astype(int)
+        up_agg['up_typically_early'] = (up_agg['up_avg_cart_position'].fillna(0) <= 5).astype(int)
         up_agg['up_cart_consistency'] = (up_agg['up_cart_std'].fillna(0) < 3).astype(int)
         
         # Merge back

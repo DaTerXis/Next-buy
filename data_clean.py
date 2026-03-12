@@ -2,7 +2,7 @@ import pandas as pd
 
 print("DÉMARRAGE DU DATA CLEANING GLOBAL")
 
-print("1/3 - ettoyage et fusion du catalogue")
+print("1/3 - Nettoyage et fusion du catalogue")
 df_products = pd.read_csv('products.csv')
 df_aisles = pd.read_csv('aisles.csv')
 df_departments = pd.read_csv('departments.csv')
@@ -11,7 +11,7 @@ df_catalog = pd.merge(df_products, df_aisles, on='aisle_id', how='left')
 df_catalog = pd.merge(df_catalog, df_departments, on='department_id', how='left')
 
 
-print("2/3 - nettoyage de l'historique des commandes")
+print("2/3 - Nettoyage de l'historique des commandes")
 noms_colonnes = ['order_id', 'user_id', 'order_number', 'order_dow', 'order_hour_of_day', 'days_since_prior_order']
 df_orders = pd.read_csv('orders.csv', skiprows=1, names=noms_colonnes)
 
